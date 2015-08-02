@@ -1,11 +1,17 @@
 package com.dtails.c17d.whiteboard;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
+
+    public void gotoBoard(View v) {
+        startActivity(new Intent(getApplicationContext(), WhiteboardActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
