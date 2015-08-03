@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.dtails.c17d.whiteboard.R;
 import com.dtails.c17d.whiteboard.drawable.Line;
+import com.dtails.c17d.whiteboard.drawable.Marker;
 import com.dtails.c17d.whiteboard.drawable.MyDrawable;
 import com.dtails.c17d.whiteboard.drawable.Point;
 import com.dtails.c17d.whiteboard.drawable.Stroke;
@@ -55,7 +56,7 @@ public class DrawView extends View {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
                 startY = event.getY();
-                if (drawObjId == 2) {
+                if (checkDrawId()) {
                     path.moveTo(startX, startY);
                 }
                 currentType = runDrawObjFactory();
@@ -64,7 +65,7 @@ public class DrawView extends View {
             case MotionEvent.ACTION_MOVE:
                 endX = event.getX();
                 endY = event.getY();
-                if (drawObjId == 2)
+                if (checkDrawId())
                     path.lineTo(endX, endY);
                 if (currentType.isInstant())
                     content.add(runDrawObjFactory());
@@ -75,7 +76,7 @@ public class DrawView extends View {
                 endY = event.getY();
                 content.add(runDrawObjFactory());
 
-                if (drawObjId == 2)
+                if (checkDrawId())
                     path.reset();
                 invalidate();
                 break;
@@ -83,6 +84,11 @@ public class DrawView extends View {
         return true;
     }
 
+    private boolean checkDrawId() {
+        if ((drawObjId == 2) || (drawObjId == 3))
+            return true;
+        return false;
+    }
     /*
         Factory for adding MyDrawable Objects.
         Gets a new MyDrawable object based on an id (Set by buttons in the WhiteboardActivity).
@@ -95,7 +101,9 @@ public class DrawView extends View {
         else if(drawObjId == 1){
             return new Line(startX, startY, endX, endY, paint);
         } else if (drawObjId == 2) {
-            return new Stroke(50, path);//TO-DO: get size value from BrushSize Menu/View.
+            return new Stroke(path);//TO-DO: get size value from BrushSize Menu/View.
+        } else if (drawObjId == 3) {
+            return new Marker(path);//TO-DO: get size value from BrushSize Menu/View.
         }
         return new Point(endX, endY, paint);
     }

@@ -69,9 +69,22 @@ public class MenuView extends View {
         };
         b_brush.setOnClickListener(ocl);
 
+        Button b_marker = new Button(context);
+        b_marker.setText("Marker");
+        b_marker.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        ocl = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("BUTTON_MARKER", "clicked");
+                DrawView.drawObjId = 3;
+            }
+        };
+        b_marker.setOnClickListener(ocl);
+
         views.add(b_line);
         views.add(b_point);
         views.add(b_brush);
+        views.add(b_marker);
         return views;
     }
 

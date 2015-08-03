@@ -6,15 +6,16 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 /**
+ * Draw with a Dry Erase Marker look.
+ * <p/>
  * Created by Eric Ong on 8/2/2015.
  */
-public class Stroke implements MyDrawable {
+public class Marker implements MyDrawable {
 
     private Paint mpaint;
     private Path path;
 
-
-    public Stroke(Path path) {
+    public Marker(Path path) {
         this.path = new Path();
         this.path.set(path);
         this.mpaint = new Paint();
@@ -22,8 +23,8 @@ public class Stroke implements MyDrawable {
         this.mpaint.setAntiAlias(true);
         this.mpaint.setStrokeWidth(20);
         this.mpaint.setStyle(Paint.Style.STROKE);
-        this.mpaint.setStrokeJoin(Paint.Join.ROUND);
-        this.mpaint.setStrokeCap(Paint.Cap.ROUND);
+        this.mpaint.setStrokeJoin(Paint.Join.MITER);
+        this.mpaint.setStrokeCap(Paint.Cap.BUTT);
     }
 
     @Override
