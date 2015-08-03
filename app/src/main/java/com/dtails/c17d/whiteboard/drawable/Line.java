@@ -11,14 +11,15 @@ public class Line implements MyDrawable {
     private float startY;
     private float endX;
     private float endY;
-    private Paint paint = new Paint();
+    private final Paint paint;
 
     public Line(float startX, float startY, float endX, float endY, Paint paint) {
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
-        this.paint = paint;
+        this.paint = new Paint();
+        this.paint.setColor(paint.getColor());
     }
 
     public float getEndX() {

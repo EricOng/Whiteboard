@@ -9,21 +9,20 @@ import android.graphics.Paint;
 public class Point implements MyDrawable {
 
     private float x, y, r;
-    private Paint mpaint;
+    private final Paint mpaint;
 
     public Point(float x, float y, Paint paint){
         this.x = x;
         this.y = y;
         this.r = 5.0f;
-        mpaint = paint;
+        this.mpaint = new Paint();
+        this.mpaint.setColor(paint.getColor());
     }
 
     public Paint getMpaint() {
         return mpaint;
     }
-    public void setMpaint(Paint mpaint) {
-        this.mpaint = mpaint;
-    }
+
     public float getX() {
         return x;
     }

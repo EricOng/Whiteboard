@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.dtails.c17d.whiteboard.R;
+import java.util.ArrayList;
 
 /**
  * Wrapper for menu layouts and views.
@@ -23,13 +23,19 @@ public class MenuView extends View {
         b_layout = new LinearLayout(context);
         b_layout.setOrientation(LinearLayout.VERTICAL);
 
-        Button b_point = new Button(context);
+        for (View v : addOnClickEvents(context))
+            b_layout.addView(v);
+
+        b_layout.addView((new ColorPickerView(context)).getView());
+    }
+
+    private ArrayList<View> addOnClickEvents(Context context) {
+
+        ArrayList<View> views = new ArrayList<View>();
+
         Button b_line = new Button(context);
         b_line.setText("Line");
         b_line.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        b_point.setText("Point");
-        b_point.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
         OnClickListener ocl = new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +45,9 @@ public class MenuView extends View {
         };
         b_line.setOnClickListener(ocl);
 
+        Button b_point = new Button(context);
+        b_point.setText("Point");
+        b_point.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         ocl = new OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -48,12 +57,22 @@ public class MenuView extends View {
         };
         b_point.setOnClickListener(ocl);
 
-        b_layout.addView(b_line);
-        b_layout.addView(b_point);
+        Button b_brush = new Button(context);
+        b_brush.setText("Brush");
+        b_brush.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        ocl = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("BUTTON_BRUSH", "clicked");
+                DrawView.drawObjId = 2;
+            }
+        };
+        b_brush.setOnClickListener(ocl);
 
-        b_layout.addView((new ColorPickerView(context)).getView());
-
-        inflate(context, R.layout.activity_whiteboard, null);
+        views.add(b_line);
+        views.add(b_point);
+        views.add(b_brush);
+        return views;
     }
 
     public View getView() {
