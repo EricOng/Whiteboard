@@ -2,6 +2,7 @@ package com.dtails.c17d.whiteboard.views;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,8 +17,6 @@ import com.dtails.c17d.whiteboard.drawable.MyDrawable;
 import com.dtails.c17d.whiteboard.drawable.Point;
 import com.dtails.c17d.whiteboard.drawable.Stroke;
 
-import java.util.LinkedList;
-
 /**
  * Created by Eric Ong on 7/29/2015.
  */
@@ -27,28 +26,30 @@ public class DrawView extends View {
     private Paint paint = new Paint();
     private float startX, startY, endX, endY;
     private Path path;
+    private Canvas drawCanvas;
+    private Bitmap canvasBitmap;
     private MyDrawable currentType;
-    private static LinkedList<MyDrawable> content;
 
     public DrawView(Context context) {
         super(context);
-        content = new LinkedList<MyDrawable>();
         paint.setColor(Color.BLACK);
         path = new Path();
         inflate(context, R.layout.activity_whiteboard, null);
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
-//        super.onDraw(canvas);
-        for(MyDrawable l : content){
-            l.draw(canvas);
-        }
-//        canvas.drawCircle(endX, endY, 5.0f, paint);
-        runDrawObjFactory().draw(canvas);
-//        canvas.drawPath(path, paint);
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        drawCanvas = new Canvas(canvasBitmap);
     }
 
+    @Override
+    public void onDraw(Canvas canvas) {
+//        super.onDraw(canvas);
+        canvas.drawBitmap(canvasBitmap, 0, 0, new Paint(Paint.DITHER_FLAG));
+        runDrawObjFactory().draw(canvas);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -60,27 +61,22 @@ public class DrawView extends View {
                     path.moveTo(startX, startY);
                 }
                 currentType = runDrawObjFactory();
-                invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
                 endX = event.getX();
                 endY = event.getY();
                 if (checkDrawId())
                     path.lineTo(endX, endY);
-                if (currentType.isInstant())
-                    content.add(runDrawObjFactory());
-                invalidate();
                 break;
             case MotionEvent.ACTION_UP:
                 endX = event.getX();
                 endY = event.getY();
-                content.add(runDrawObjFactory());
-
+                runDrawObjFactory().draw(drawCanvas);
                 if (checkDrawId())
                     path.reset();
-                invalidate();
                 break;
         }
+        invalidate();
         return true;
     }
 

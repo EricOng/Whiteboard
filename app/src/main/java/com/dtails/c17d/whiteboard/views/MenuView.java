@@ -81,10 +81,23 @@ public class MenuView extends View {
         };
         b_marker.setOnClickListener(ocl);
 
+        Button b_erase = new Button(context);
+        b_erase.setText("Eraser");
+        b_erase.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        ocl = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("BUTTON_ERASE", "clicked");
+                DrawView.drawObjId = 4;
+            }
+        };
+        b_erase.setOnClickListener(ocl);
+
         views.add(b_line);
         views.add(b_point);
         views.add(b_brush);
         views.add(b_marker);
+        views.add(b_erase);
         return views;
     }
 
