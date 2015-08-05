@@ -1,37 +1,19 @@
 package com.dtails.c17d.whiteboard;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
-import com.dtails.c17d.whiteboard.views.DrawView;
-import com.dtails.c17d.whiteboard.views.MenuView;
+import com.dtails.c17d.whiteboard.layouts.DrawLayout;
 
 public class WhiteboardActivity extends AppCompatActivity {
-
-    DrawView drawView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        drawView = new DrawView(this);
-        drawView.setBackgroundColor(Color.WHITE);
-
-        LinearLayout layout = new LinearLayout(this);
-//        layout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        layout.setPadding(R.dimen.activity_horizontal_margin, R.dimen.activity_horizontal_margin, R.dimen.activity_vertical_margin, R.dimen.activity_vertical_margin);
-
-        layout.addView((new MenuView(this)).getView());
-        layout.addView(drawView);
-        setContentView(layout);
-    }
-
-    public DrawView getDrawView() {
-        return drawView;
+        setContentView(new DrawLayout(this));
     }
 
     @Override

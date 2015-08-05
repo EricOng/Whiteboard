@@ -40,7 +40,7 @@ public class MenuView extends View {
             @Override
             public void onClick(View v) {
                 Log.i("BUTTON_LINE", "clicked");
-                DrawView.drawObjId = 1;
+                DrawView.drawObjId = DrawView.ID_LINE;
             }
         };
         b_line.setOnClickListener(ocl);
@@ -52,7 +52,7 @@ public class MenuView extends View {
             @Override
             public void onClick(View v) {
                 Log.i("BUTTON_POINT", "clicked");
-                DrawView.drawObjId = 0;
+                DrawView.drawObjId = DrawView.ID_POINT;
             }
         };
         b_point.setOnClickListener(ocl);
@@ -64,7 +64,7 @@ public class MenuView extends View {
             @Override
             public void onClick(View v) {
                 Log.i("BUTTON_BRUSH", "clicked");
-                DrawView.drawObjId = 2;
+                DrawView.drawObjId = DrawView.ID_BRUSH;
             }
         };
         b_brush.setOnClickListener(ocl);
@@ -76,7 +76,7 @@ public class MenuView extends View {
             @Override
             public void onClick(View v) {
                 Log.i("BUTTON_MARKER", "clicked");
-                DrawView.drawObjId = 3;
+                DrawView.drawObjId = DrawView.ID_MARKER;
             }
         };
         b_marker.setOnClickListener(ocl);
@@ -88,7 +88,7 @@ public class MenuView extends View {
             @Override
             public void onClick(View v) {
                 Log.i("BUTTON_ERASE", "clicked");
-                DrawView.drawObjId = 4;
+                DrawView.drawObjId = DrawView.ID_ERASER;
             }
         };
         b_erase.setOnClickListener(ocl);

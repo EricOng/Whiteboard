@@ -22,18 +22,39 @@ import com.dtails.c17d.whiteboard.drawable.Stroke;
  */
 public class DrawView extends View {
     public static int drawObjId = 0;
+    public static int ID_POINT = 0;
+    public static int ID_LINE = 1;
+    public static int ID_BRUSH = 2;
+    public static int ID_MARKER = 3;
+    public static int ID_ERASER = 4;
+
 
     private float startX, startY, endX, endY;
     private Paint canvasPaint = new Paint(Paint.DITHER_FLAG);
     private Path path;
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
-    private MyDrawable currentType;
 
     public DrawView(Context context) {
         super(context);
         path = new Path();
         inflate(context, R.layout.activity_whiteboard, null);
+    }
+
+    public Bitmap getCanvasBitmap() {
+        return canvasBitmap;
+    }
+
+    public void setCanvasBitmap(Bitmap canvasBitmap) {
+        this.canvasBitmap = canvasBitmap;
+    }
+
+    public Canvas getDrawCanvas() {
+        return drawCanvas;
+    }
+
+    public void setDrawCanvas(Canvas drawCanvas) {
+        this.drawCanvas = drawCanvas;
     }
 
     @Override
@@ -47,7 +68,8 @@ public class DrawView extends View {
     public void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
-        runDrawObjFactory().draw(canvas);
+        if (!isEraser())
+            runDrawObjFactory().draw(canvas);
     }
 
     @Override
@@ -56,22 +78,28 @@ public class DrawView extends View {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
                 startY = event.getY();
-                if (checkDrawId()) {
+                if (isPathReliant()) {
                     path.moveTo(startX, startY);
                 }
-                currentType = runDrawObjFactory();
                 break;
             case MotionEvent.ACTION_MOVE:
                 endX = event.getX();
                 endY = event.getY();
-                if (checkDrawId())
+                if (isPathReliant()) {
                     path.lineTo(endX, endY);
+                    if (isEraser()) {
+                        runDrawObjFactory().draw(drawCanvas);
+                        path.reset();
+                        path.moveTo(endX, endY);
+                    }
+                }
+
                 break;
             case MotionEvent.ACTION_UP:
                 endX = event.getX();
                 endY = event.getY();
                 runDrawObjFactory().draw(drawCanvas);
-                if (checkDrawId())
+                if (isPathReliant())
                     path.reset();
                 break;
         }
@@ -79,8 +107,14 @@ public class DrawView extends View {
         return true;
     }
 
-    private boolean checkDrawId() {
-        if ((drawObjId == 2) || (drawObjId == 3) || (drawObjId == 4))
+    private boolean isEraser() {
+        if (drawObjId == ID_ERASER)
+            return true;
+        return false;
+    }
+
+    private boolean isPathReliant() {
+        if ((drawObjId == ID_BRUSH) || (drawObjId == ID_MARKER) || (drawObjId == ID_ERASER))
             return true;
         return false;
     }

@@ -14,7 +14,6 @@ public class Stroke implements MyDrawable {
     private Paint paint;
     private Path path;
 
-
     public Stroke(Path path) {
         this.path = new Path();
         this.path.set(path);
