@@ -8,5 +8,4 @@ import android.graphics.Canvas;
  */
 public interface MyDrawable {
      void draw(Canvas canvas);
-     boolean isInstant();
 }

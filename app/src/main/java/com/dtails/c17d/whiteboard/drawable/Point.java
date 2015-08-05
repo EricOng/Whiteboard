@@ -3,6 +3,8 @@ package com.dtails.c17d.whiteboard.drawable;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.dtails.c17d.whiteboard.views.ColorPickerView;
+
 /**
  * Created by Eric Ong on 7/30/2015.
  */
@@ -11,12 +13,11 @@ public class Point implements MyDrawable {
     private float x, y, r;
     private final Paint mpaint;
 
-    public Point(float x, float y, Paint paint){
+    public Point(float x, float y) {
         this.x = x;
         this.y = y;
         this.r = 5.0f;
-        this.mpaint = new Paint();
-        this.mpaint.setColor(paint.getColor());
+        this.mpaint = ColorPickerView.currColor;
     }
 
     public Paint getMpaint() {
@@ -40,11 +41,4 @@ public class Point implements MyDrawable {
     public void draw(Canvas canvas) {
         canvas.drawCircle(x, y, r, mpaint);
     }
-
-    @Override
-    public boolean isInstant() {
-        return true;
-    }
-
-
 }

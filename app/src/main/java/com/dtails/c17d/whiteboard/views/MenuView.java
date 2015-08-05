@@ -81,7 +81,7 @@ public class MenuView extends View {
         };
         b_marker.setOnClickListener(ocl);
 
-        Button b_erase = new Button(context);
+        final Button b_erase = new Button(context);
         b_erase.setText("Eraser");
         b_erase.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         ocl = new OnClickListener() {

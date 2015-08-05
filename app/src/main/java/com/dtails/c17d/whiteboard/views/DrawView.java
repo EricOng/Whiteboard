@@ -4,13 +4,13 @@ package com.dtails.c17d.whiteboard.views;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.dtails.c17d.whiteboard.R;
+import com.dtails.c17d.whiteboard.drawable.Eraser;
 import com.dtails.c17d.whiteboard.drawable.Line;
 import com.dtails.c17d.whiteboard.drawable.Marker;
 import com.dtails.c17d.whiteboard.drawable.MyDrawable;
@@ -23,8 +23,8 @@ import com.dtails.c17d.whiteboard.drawable.Stroke;
 public class DrawView extends View {
     public static int drawObjId = 0;
 
-    private Paint paint = new Paint();
     private float startX, startY, endX, endY;
+    private Paint canvasPaint = new Paint(Paint.DITHER_FLAG);
     private Path path;
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
@@ -32,7 +32,6 @@ public class DrawView extends View {
 
     public DrawView(Context context) {
         super(context);
-        paint.setColor(Color.BLACK);
         path = new Path();
         inflate(context, R.layout.activity_whiteboard, null);
     }
@@ -47,7 +46,7 @@ public class DrawView extends View {
     @Override
     public void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
-        canvas.drawBitmap(canvasBitmap, 0, 0, new Paint(Paint.DITHER_FLAG));
+        canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         runDrawObjFactory().draw(canvas);
     }
 
@@ -81,7 +80,7 @@ public class DrawView extends View {
     }
 
     private boolean checkDrawId() {
-        if ((drawObjId == 2) || (drawObjId == 3))
+        if ((drawObjId == 2) || (drawObjId == 3) || (drawObjId == 4))
             return true;
         return false;
     }
@@ -92,15 +91,17 @@ public class DrawView extends View {
      */
     private MyDrawable runDrawObjFactory() {
         if(drawObjId == 0){
-            return new Point(endX, endY, paint);
+            return new Point(endX, endY);
         }
         else if(drawObjId == 1){
-            return new Line(startX, startY, endX, endY, paint);
+            return new Line(startX, startY, endX, endY);
         } else if (drawObjId == 2) {
             return new Stroke(path);//TO-DO: get size value from BrushSize Menu/View.
         } else if (drawObjId == 3) {
             return new Marker(path);//TO-DO: get size value from BrushSize Menu/View.
+        } else if (drawObjId == 4) {
+            return new Eraser(path);//TO-DO: get size value from BrushSize Menu/View.
         }
-        return new Point(endX, endY, paint);
+        return new Point(endX, endY);
     }
 }
