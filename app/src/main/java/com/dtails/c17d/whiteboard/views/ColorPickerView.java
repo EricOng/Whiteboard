@@ -7,10 +7,11 @@ import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.dtails.c17d.whiteboard.utils.Integer_DP;
+import com.dtails.c17d.whiteboard.utils.TypeConverter;
 
 /**
  * Wrapper for ColorPicker.
@@ -83,17 +84,17 @@ public class ColorPickerView extends View {
             @Override
             public boolean onTouchEvent(MotionEvent event) {
                 int i = Math.round(event.getX());
+                if (i >= mHueBarColors.length)
+                    i = mHueBarColors.length - 1;
                 currColor.setColor(mHueBarColors[i]);
                 return true;
             }
         };
 //        palette.setBackgroundColor(Color.parseColor("#808080"));
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                (new Integer_DP(90, getResources().getDisplayMetrics())).getInt_DP(),
-                (new Integer_DP(90, getResources().getDisplayMetrics())).getInt_DP()
-        );
-
-        frameLayout.setLayoutParams(params);
+        palette.setLayoutParams(new ViewGroup.LayoutParams(
+                TypeConverter.convertInt_DP(90, getResources().getDisplayMetrics()),
+                TypeConverter.convertInt_DP(90, getResources().getDisplayMetrics())
+        ));
         frameLayout.addView(palette);
     }
 
