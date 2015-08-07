@@ -4,8 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-import com.dtails.c17d.whiteboard.views.ColorPickerView;
-
 /**
  * Draw with a Dry Erase Marker look.
  * <p/>
@@ -16,15 +14,24 @@ public class Marker implements MyDrawable {
     private Paint paint;
     private Path path;
 
-    public Marker(Path path) {
+    public Marker() {
         this.path = new Path();
         this.path.set(path);
-        this.paint = ColorPickerView.currColor;
+//        this.paint = ColorPickerView.currColor;
+        this.paint = new Paint();
         this.paint.setAntiAlias(true);
         this.paint.setStrokeWidth(20);
         this.paint.setStyle(Paint.Style.STROKE);
         this.paint.setStrokeJoin(Paint.Join.MITER);
         this.paint.setStrokeCap(Paint.Cap.BUTT);
+    }
+
+    public void setPaintColor(Paint paint) {
+        this.paint.setColor(paint.getColor());
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
     }
 
     @Override

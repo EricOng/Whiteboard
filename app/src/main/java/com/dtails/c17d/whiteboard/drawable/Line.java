@@ -3,8 +3,6 @@ package com.dtails.c17d.whiteboard.drawable;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.dtails.c17d.whiteboard.views.ColorPickerView;
-
 /**
  * Created by Eric Ong on 7/30/2015.
  */
@@ -20,7 +18,8 @@ public class Line implements MyDrawable {
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
-        this.paint = ColorPickerView.currColor;
+//        this.paint = ColorPickerView.currColor;
+        this.paint = new Paint();
     }
 
     public float getEndX() {

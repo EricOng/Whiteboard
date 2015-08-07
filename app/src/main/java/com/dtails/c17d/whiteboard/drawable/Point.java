@@ -3,8 +3,6 @@ package com.dtails.c17d.whiteboard.drawable;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import com.dtails.c17d.whiteboard.views.ColorPickerView;
-
 /**
  * Created by Eric Ong on 7/30/2015.
  */
@@ -17,7 +15,8 @@ public class Point implements MyDrawable {
         this.x = x;
         this.y = y;
         this.r = 5.0f;
-        this.mpaint = ColorPickerView.currColor;
+//        this.mpaint = ColorPickerView.currColor;
+        this.mpaint = new Paint();
     }
 
     public Paint getMpaint() {

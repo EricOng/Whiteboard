@@ -4,8 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-import com.dtails.c17d.whiteboard.views.ColorPickerView;
-
 /**
  * Created by Eric Ong on 8/2/2015.
  */
@@ -17,7 +15,8 @@ public class Stroke implements MyDrawable {
     public Stroke(Path path) {
         this.path = new Path();
         this.path.set(path);
-        this.paint = ColorPickerView.currColor;
+//        this.paint = ColorPickerView.currColor;
+        this.paint = new Paint();
         this.paint.setAntiAlias(true);
         this.paint.setStrokeWidth(20);
         this.paint.setStyle(Paint.Style.STROKE);

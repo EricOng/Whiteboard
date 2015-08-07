@@ -21,24 +21,29 @@ import com.dtails.c17d.whiteboard.drawable.Stroke;
  * Created by Eric Ong on 7/29/2015.
  */
 public class DrawView extends View {
+    public static int markerIndex = -1;
     public static int drawObjId = 0;
     public static int ID_POINT = 0;
     public static int ID_LINE = 1;
     public static int ID_BRUSH = 2;
     public static int ID_MARKER = 3;
     public static int ID_ERASER = 4;
-
+    public static Paint currColor = new Paint();
 
     private float startX, startY, endX, endY;
     private Paint canvasPaint = new Paint(Paint.DITHER_FLAG);
     private Path path;
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
+    private Marker[] markers = new Marker[4];
 
     public DrawView(Context context) {
         super(context);
         path = new Path();
         inflate(context, R.layout.activity_whiteboard, null);
+        for (int i = 0; i < markers.length; i++) {
+            markers[i] = new Marker();
+        }
     }
 
     public Bitmap getCanvasBitmap() {
@@ -60,6 +65,7 @@ public class DrawView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+//        Log.i("CANVAS", "bitmap: " + w + " " + h);
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         drawCanvas = new Canvas(canvasBitmap);
     }
@@ -67,6 +73,7 @@ public class DrawView extends View {
     @Override
     public void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
+//        Log.i("CANVAS", "canvas: " + canvas.getWidth() + " " + canvas.getHeight());
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         if (!isEraser())
             runDrawObjFactory().draw(canvas);
@@ -118,6 +125,7 @@ public class DrawView extends View {
             return true;
         return false;
     }
+
     /*
         Factory for adding MyDrawable Objects.
         Gets a new MyDrawable object based on an id (Set by buttons in the WhiteboardActivity).
@@ -130,11 +138,13 @@ public class DrawView extends View {
         else if(drawObjId == 1){
             return new Line(startX, startY, endX, endY);
         } else if (drawObjId == 2) {
-            return new Stroke(path);//TO-DO: get size value from BrushSize Menu/View.
+            return new Stroke(path);
         } else if (drawObjId == 3) {
-            return new Marker(path);//TO-DO: get size value from BrushSize Menu/View.
+            markers[markerIndex].setPath(path);
+            markers[markerIndex].setPaintColor(currColor);
+            return markers[markerIndex];
         } else if (drawObjId == 4) {
-            return new Eraser(path);//TO-DO: get size value from BrushSize Menu/View.
+            return new Eraser(path);
         }
         return new Point(endX, endY);
     }

@@ -1,15 +1,15 @@
-package com.dtails.c17d.whiteboard.views;
+package com.dtails.c17d.whiteboard.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
+import android.os.Build;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.dtails.c17d.whiteboard.utils.TypeConverter;
 
@@ -18,19 +18,17 @@ import com.dtails.c17d.whiteboard.utils.TypeConverter;
  *
  * Created by Eric Ong on 8/1/2015.
  */
-public class ColorPickerView extends View {
+public class ColorPickerLayout extends LinearLayout {
 
-    private FrameLayout frameLayout;
-    private ImageView palette;
+    private ImageButton palette;
     private Paint colors = new Paint();
-    public static Paint currColor;
+    public Paint currColor;
     private final int[] mHueBarColors = new int[258];
 
-    public ColorPickerView(Context context) {
+    public ColorPickerLayout(Context context) {
         super(context);
         currColor = new Paint();
         currColor.setColor(Color.BLACK);
-        frameLayout = new FrameLayout(context);
 
         // Initialize color spectrum
         int index = 0;
@@ -66,14 +64,14 @@ public class ColorPickerView extends View {
         }
 
         //Initialize view with colors
-        palette = new ImageView(context) {
+        palette = new ImageButton(context) {
             int r = 0, g = 0, b = 255;
             @Override
             protected void onDraw(Canvas canvas) {
 //                getBackgroundTintList();
                 super.onDraw(canvas);
-                String msg = "w: " + canvas.getWidth() + " h: " + canvas.getHeight();
-                Log.i("COLOR_PICKER", msg);
+//                String msg = "w: " + canvas.getWidth() + " h: " + canvas.getHeight();
+//                Log.i("COLOR_PICKER", msg);
 
                 for (int x = 0; x < 256; x++) {
                     colors.setColor(mHueBarColors[x]);
@@ -81,24 +79,26 @@ public class ColorPickerView extends View {
                 }
             }
 
+            @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
             @Override
             public boolean onTouchEvent(MotionEvent event) {
                 int i = Math.round(event.getX());
                 if (i >= mHueBarColors.length)
                     i = mHueBarColors.length - 1;
                 currColor.setColor(mHueBarColors[i]);
+                this.callOnClick();
                 return true;
             }
         };
-//        palette.setBackgroundColor(Color.parseColor("#808080"));
         palette.setLayoutParams(new ViewGroup.LayoutParams(
                 TypeConverter.convertInt_DP(90, getResources().getDisplayMetrics()),
                 TypeConverter.convertInt_DP(90, getResources().getDisplayMetrics())
         ));
-        frameLayout.addView(palette);
+
+        this.addView(palette);
     }
 
-    public View getView(){
-        return frameLayout;
+    public ImageButton getPalette() {
+        return this.palette;
     }
 }
