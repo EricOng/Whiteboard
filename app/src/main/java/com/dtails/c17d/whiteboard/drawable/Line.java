@@ -2,6 +2,7 @@ package com.dtails.c17d.whiteboard.drawable;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 
 /**
  * Created by Eric Ong on 7/30/2015.
@@ -42,7 +43,8 @@ public class Line implements MyDrawable {
         return startY;
     }
 
-    public void draw(Canvas canvas){
+    @Override
+    public void draw(Canvas canvas, Path path) {
         canvas.drawLine(startX, startY, endX, endY, paint);
     }
 }

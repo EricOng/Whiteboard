@@ -68,11 +68,8 @@ public class ColorPickerLayout extends LinearLayout {
             int r = 0, g = 0, b = 255;
             @Override
             protected void onDraw(Canvas canvas) {
-//                getBackgroundTintList();
                 super.onDraw(canvas);
-//                String msg = "w: " + canvas.getWidth() + " h: " + canvas.getHeight();
 //                Log.i("COLOR_PICKER", msg);
-
                 for (int x = 0; x < 256; x++) {
                     colors.setColor(mHueBarColors[x]);
                     canvas.drawLine(x + 10, 0, x + 10, 40, colors);
@@ -85,6 +82,8 @@ public class ColorPickerLayout extends LinearLayout {
                 int i = Math.round(event.getX());
                 if (i >= mHueBarColors.length)
                     i = mHueBarColors.length - 1;
+                else if (i < 0)
+                    i = 0;
                 currColor.setColor(mHueBarColors[i]);
                 this.callOnClick();
                 return true;
@@ -92,7 +91,7 @@ public class ColorPickerLayout extends LinearLayout {
         };
         palette.setLayoutParams(new ViewGroup.LayoutParams(
                 TypeConverter.convertInt_DP(90, getResources().getDisplayMetrics()),
-                TypeConverter.convertInt_DP(90, getResources().getDisplayMetrics())
+                TypeConverter.convertInt_DP(20, getResources().getDisplayMetrics())
         ));
 
         this.addView(palette);

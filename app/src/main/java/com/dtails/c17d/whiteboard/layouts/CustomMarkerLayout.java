@@ -3,10 +3,12 @@ package com.dtails.c17d.whiteboard.layouts;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.dtails.c17d.whiteboard.utils.TypeConverter;
 import com.dtails.c17d.whiteboard.views.DrawView;
 
 /**
@@ -25,6 +27,11 @@ public class CustomMarkerLayout extends LinearLayout {
 
         alwaysVisibleLayer = new LinearLayout(context);
         alwaysVisibleLayer.setOrientation(HORIZONTAL);
+
+        alwaysVisibleLayer.setLayoutParams(new ViewGroup.LayoutParams(
+                TypeConverter.convertInt_DP(90, getResources().getDisplayMetrics()),
+                TypeConverter.convertInt_DP(30, getResources().getDisplayMetrics())
+        ));
 
         btnView_name = new Button(context);
 
@@ -56,7 +63,7 @@ public class CustomMarkerLayout extends LinearLayout {
         onClickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                DrawView.drawObjId = DrawView.ID_MARKER;
+                DrawView.drawMode = DrawView.ID_MARKER;
                 DrawView.markerIndex = 1;
                 setMarkerColor(clrPickerView.currColor.getColor());
                 DrawView.currColor = clrPickerView.currColor;
@@ -64,7 +71,6 @@ public class CustomMarkerLayout extends LinearLayout {
         };
         btnView_name.setOnClickListener(onClickListener);
         clrPickerView.getPalette().setOnClickListener(onClickListener);
-
     }
 
     public void setName(CharSequence name) {

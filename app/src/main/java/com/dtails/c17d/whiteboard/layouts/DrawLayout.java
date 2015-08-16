@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.widget.LinearLayout;
 
 import com.dtails.c17d.whiteboard.views.DrawView;
-import com.dtails.c17d.whiteboard.views.MenuView;
 
 /**
  * Created by Eric Ong on 8/4/2015.
@@ -13,15 +12,14 @@ import com.dtails.c17d.whiteboard.views.MenuView;
 public class DrawLayout extends LinearLayout {
 
     DrawView drawView;
-    MenuView menuView;
+    MenuLayout menuLayout;
 
     public DrawLayout(Context context) {
         super(context);
-
         drawView = new DrawView(context);
         drawView.setBackgroundColor(Color.WHITE);
-        menuView = new MenuView(context);
-        this.addView(menuView.getView());
+        menuLayout = new MenuLayout(context);
+        this.addView(menuLayout);
         this.addView(drawView);
     }
 
@@ -33,11 +31,13 @@ public class DrawLayout extends LinearLayout {
         this.drawView = drawView;
     }
 
-    public MenuView getMenuView() {
-        return menuView;
+    public MenuLayout getMenuLayout() {
+        return menuLayout;
     }
 
-    public void setMenuView(MenuView menuView) {
-        this.menuView = menuView;
+    public void setMenuLayout(MenuLayout menuLayout) {
+        this.menuLayout = menuLayout;
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.dtails.c17d.whiteboard.drawable;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 
 /**
  * Created by Eric Ong on 7/30/2015.
@@ -37,7 +38,7 @@ public class Point implements MyDrawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, Path path) {
         canvas.drawCircle(x, y, r, mpaint);
     }
 }

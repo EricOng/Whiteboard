@@ -12,11 +12,8 @@ import android.graphics.PorterDuffXfermode;
 public class Eraser implements MyDrawable {
 
     private Paint mpaint;
-    private Path path;
 
-    public Eraser(Path path) {
-        this.path = new Path();
-        this.path.set(path);
+    public Eraser() {
         this.mpaint = new Paint();
         this.mpaint.setAntiAlias(true);
         this.mpaint.setStrokeWidth(20);
@@ -27,7 +24,7 @@ public class Eraser implements MyDrawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        canvas.drawPath(this.path, this.mpaint);
+    public void draw(Canvas canvas, Path path) {
+        canvas.drawPath(path, this.mpaint);
     }
 }

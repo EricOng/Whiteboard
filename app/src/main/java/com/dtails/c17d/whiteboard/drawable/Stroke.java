@@ -10,11 +10,8 @@ import android.graphics.Path;
 public class Stroke implements MyDrawable {
 
     private Paint paint;
-    private Path path;
 
-    public Stroke(Path path) {
-        this.path = new Path();
-        this.path.set(path);
+    public Stroke() {
 //        this.paint = ColorPickerView.currColor;
         this.paint = new Paint();
         this.paint.setAntiAlias(true);
@@ -25,7 +22,7 @@ public class Stroke implements MyDrawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        canvas.drawPath(this.path, this.paint);
+    public void draw(Canvas canvas, Path path) {
+        canvas.drawPath(path, this.paint);
     }
 }
